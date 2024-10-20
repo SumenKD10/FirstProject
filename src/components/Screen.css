@@ -2,8 +2,12 @@
     background-color: azure;
     height: 100vh;
     position: absolute;
-    width: 100vw;
+    width: 95vw;
     padding: 50px;
+}
+
+body{
+    font-family: Poppins;
 }
 
 .heading{
@@ -30,4 +34,29 @@
 .fields{
     display: flex;
     justify-content: space-between;
+}
+
+.tableBox{
+    border: 2px solid;
+    border-color: cadetblue;
+    border-radius: 10px;
+    flex: 1;
+    padding: 20px;
+}
+
+.allTableContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    font-family: Poppins;
+}
+
+.buttonStyle{
+    padding: 10px;
+    border: 0px;
+    font-family: Poppins;
+}
+
+.eachItem{
+    width: 400px;
 }

@@ -5,37 +5,71 @@ export default function Screen() {
     const [orderId, setOrderId] = useState("");
     const [price, setPrice] = useState("");
     const [dish, setDish] = useState("");
-    const [table, setTable] = useState("");
-    const [table1Details, setTable1Details] = useState([]);
-    const [table2Details, setTable2Details] = useState([]);
-    const [table3Details, setTable3Details] = useState([]);
+    const [table, setTable] = useState("Table 1");
 
     function orderIdChangeHandler(e) {
-        if (e.target.value) {
-            setOrderId(e.target.value);
-        }
+        setOrderId(e.target.value);
     }
 
     function priceChangeHandler(e) {
-        if (e.target.value) {
-            setPrice(e.target.value);
-        }
+        setPrice(e.target.value);
     }
 
     function dishChangeHandler(e) {
-        if (e.target.value) {
-            setDish(e.target.value);
-        }
+        setDish(e.target.value);
     }
 
     function tableChangeHandler(e) {
-        if (e.target.value) {
-            setTable(e.target.value);
-        }
+        setTable(e.target.value);
     }
 
     function submitHandler() {
         console.log(orderId, price, dish, table);
+        if (orderId && price && dish && table && !localStorage.getItem(orderId)) {
+            let newElement = document.createElement("li");
+            newElement.classList.add("eachItem");
+            let tableNo;
+            newElement.innerHTML = dish + "  -  " + price + "        ";
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.onclick = deleteHandler;
+            newElement.appendChild(deleteButton);
+            if (table === "Table 1") {
+                tableNo = document.getElementById("table1");
+            } else if (table === "Table 2") {
+                tableNo = document.getElementById("table2");
+            } else {
+                tableNo = document.getElementById("table3");
+            }
+            tableNo.appendChild(newElement);
+            let objectToSaveInLocal = {
+                "Dish": dish,
+                "Price": price,
+                "Table": table
+            }
+            let objectToSaveInHTML = {
+                "OrderId": orderId,
+                "Dish": dish,
+                "Price": price,
+                "Table": table
+            }
+            newElement.setAttribute("objectDetails", JSON.stringify(objectToSaveInHTML));
+            localStorage.setItem(orderId, JSON.stringify(objectToSaveInLocal));
+            setOrderId("");
+            setDish("");
+            setPrice("");
+        }
+    }
+
+    function deleteHandler(e) {
+        console.log("Deletion Button Pressed with value", e.target.parentElement);
+        let elementGot = e.target.parentElement.parentNode;
+        console.log(elementGot);
+        let elementDetails = JSON.parse(e.target.parentElement.getAttribute("objectDetails"));
+        let idGot = elementDetails["OrderId"];
+        elementGot.removeChild(e.target.parentElement);
+        console.log(idGot);
+        localStorage.removeItem(idGot);
     }
 
     return (
@@ -65,20 +99,22 @@ export default function Screen() {
                             <option>Table 3</option>
                         </select>
                     </div>
-                    <button type="submit" onClick={submitHandler}>Add to bill</button>
+                    <button type="submit" onClick={submitHandler} className="buttonStyle">Add to bill</button>
                 </div>
                 <h4>Details:</h4>
-                <div className="tableBox">
-                    <h5>Table 1</h5>
-                    <ul id="table1"></ul>
-                </div>
-                <div className="tableBox">
-                    <h5>Table 2</h5>
-                    <ul id="table1"></ul>
-                </div>
-                <div className="tableBox">
-                    <h5>Table 3</h5>
-                    <ul id="table1"></ul>
+                <div className="allTableContainer">
+                    <div className="tableBox">
+                        <h5>Table 1</h5>
+                        <ul id="table1"></ul>
+                    </div>
+                    <div className="tableBox">
+                        <h5>Table 2</h5>
+                        <ul id="table2"></ul>
+                    </div>
+                    <div className="tableBox">
+                        <h5>Table 3</h5>
+                        <ul id="table3"></ul>
+                    </div>
                 </div>
             </div>
         </>
