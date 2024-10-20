@@ -1,0 +1,33 @@
+.container{
+    background-color: azure;
+    height: 100vh;
+    position: absolute;
+    width: 100vw;
+    padding: 50px;
+}
+
+.heading{
+    text-align: center;
+    font-family: Poppins;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    gap: 20px;
+    margin: auto;
+    background-color: cadetblue;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.inputLabel{
+    color: white;
+    font-family: Poppins;
+}
+
+.fields{
+    display: flex;
+    justify-content: space-between;
+}
